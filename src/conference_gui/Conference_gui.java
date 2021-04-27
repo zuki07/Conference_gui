@@ -1,7 +1,6 @@
 
 package conference_gui;
 
-import onference_gui.ClearButtonEvents;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
