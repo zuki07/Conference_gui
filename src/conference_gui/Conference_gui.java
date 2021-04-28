@@ -71,20 +71,21 @@ public class Conference_gui extends Application {
                 error.setText("");
                 boolean key_found=false;
                 Set<String> keys=map.keySet();
+                
                 for(String k:keys){
                     if(k.equalsIgnoreCase(user_name.getText())){
                         error.setVisible(false);
                         key_found=true;
                         break;
                     }
-                    else{
-                        error.setVisible(true);
-                        error.setText("User name does not exist");
-                        user_name.clear();
-                        password.clear();
-                    }
                 }
-                if(key_found==true){
+                if(key_found==false){
+                    error.setVisible(true);
+                    error.setText("User name does not exist");
+                    user_name.clear();
+                    password.clear();
+                }
+                else if(key_found==true){
                     List<Object> value_list=(List<Object>) map.get(user_name.getText());
                     Object password_value=value_list.get(0);
                     if(password_value!=null){
