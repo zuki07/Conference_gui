@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
-public class ClearButtonEvents extends Conference_gui{
+public class ClearButtonEvents extends User_gui{
     private ComboBox general_box=new ComboBox();
     private ComboBox student_box=new ComboBox();
     private ComboBox dinner_box=new ComboBox();

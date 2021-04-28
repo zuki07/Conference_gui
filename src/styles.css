@@ -79,3 +79,8 @@
     -fx-background-radius: 10px;
 }
 
+#log_in_error{
+    -fx-background-color: red;
+    -fx-padding: 10px;
+}
+
