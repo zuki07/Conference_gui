@@ -3,7 +3,6 @@ package conference_gui;
 
 import java.io.FileNotFoundException;
 import java.util.Map;
-import java.util.logging.Level;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
@@ -141,13 +140,13 @@ public class User_gui{
                 general.setStyle("");
                 student.setStyle("");
                 
-                general_value=general_value*895;
-                student_value=student_value*495;
-                dinner_value=dinner_value*30;
-                commerce_value=commerce_value*295;
-                web_value=web_value*295;
-                java_value=java_value*395;
-                network_value=network_value*395;
+                general_value=general_value*Integer.parseInt(user_price.get("general").toString());
+                student_value=student_value*Integer.parseInt(user_price.get("student").toString());
+                dinner_value=dinner_value*Integer.parseInt(user_price.get("dinner").toString());
+                commerce_value=commerce_value*Integer.parseInt(user_price.get("commerce").toString());
+                web_value=web_value*Integer.parseInt(user_price.get("web").toString());
+                java_value=java_value*Integer.parseInt(user_price.get("java").toString());
+                network_value=network_value*Integer.parseInt(user_price.get("network").toString());
                 int total_amount=general_value+student_value+dinner_value+commerce_value+web_value+java_value+network_value;        //add everthing togethe
                 total_label.setText(String.format("Grand Total: $%,d",total_amount));
                 total_label.setStyle("-fx-border-width: 1.5px; -fx-border-radius: 10px;"+                                           //*does not look good without inline styling
