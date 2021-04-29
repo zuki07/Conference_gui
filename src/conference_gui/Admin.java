@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -50,7 +49,7 @@ public class Admin {
         
         TextField general_input=new TextField();
         general_input.setAlignment(Pos.CENTER);
-        general_input.setMaxWidth(150);
+        general_input.setMaxWidth(200);
         general_input.setPromptText("--General Registration--");
         general_input.setFocusTraversable(false);
         Label general_current=new Label(general_txt+admin_map.get("general"));
@@ -58,7 +57,7 @@ public class Admin {
         
         TextField student_input=new TextField();
         student_input.setAlignment(Pos.CENTER);
-        student_input.setMaxWidth(150);
+        student_input.setMaxWidth(200);
         student_input.setPromptText("--Student Registration--");
         student_input.setFocusTraversable(false);
         Label student_current=new Label(student_txt+admin_map.get("student"));
@@ -66,7 +65,7 @@ public class Admin {
         
         TextField dinner_input=new TextField();
         dinner_input.setAlignment(Pos.CENTER);
-        dinner_input.setMaxWidth(150);
+        dinner_input.setMaxWidth(200);
         dinner_input.setPromptText("--Night Dinner--");
         dinner_input.setFocusTraversable(false);
         Label dinner_current=new Label(dinner_txt+admin_map.get("dinner"));
@@ -74,7 +73,7 @@ public class Admin {
         
         TextField commerce_input=new TextField();
         commerce_input.setAlignment(Pos.CENTER);
-        commerce_input.setMaxWidth(150);
+        commerce_input.setMaxWidth(200);
         commerce_input.setPromptText("--E-commerce--");
         commerce_input.setFocusTraversable(false);
         Label commerce_current=new Label(commerce_txt+admin_map.get("commerce"));
@@ -82,7 +81,7 @@ public class Admin {
         
         TextField web_input=new TextField();
         web_input.setAlignment(Pos.CENTER);
-        web_input.setMaxWidth(150);
+        web_input.setMaxWidth(200);
         web_input.setPromptText("--Web--");
         web_input.setFocusTraversable(false);
         Label web_current=new Label(web_txt+admin_map.get("web"));
@@ -90,7 +89,7 @@ public class Admin {
         
         TextField java_input=new TextField();
         java_input.setAlignment(Pos.CENTER);
-        java_input.setMaxWidth(150);
+        java_input.setMaxWidth(200);
         java_input.setPromptText("--Advanced Java--");
         java_input.setFocusTraversable(false);
         Label java_current=new Label(java_txt+admin_map.get("java"));
@@ -98,7 +97,7 @@ public class Admin {
         
         TextField network_input=new TextField();
         network_input.setAlignment(Pos.CENTER);
-        network_input.setMaxWidth(150);
+        network_input.setMaxWidth(200);
         network_input.setPromptText("--Network Security--");
         network_input.setFocusTraversable(false);
         Label network_current=new Label(network_txt+admin_map.get("network"));
@@ -182,7 +181,7 @@ public class Admin {
         grid.setPadding(new Insets(30));
         
         Scene new_user_scene = new Scene(grid, 800, 875);
-        new_user_scene.getStylesheets().add("styles.css");
+        new_user_scene.getStylesheets().add("admin_styles.css");
         admin_stage.setTitle("Create User");
         admin_stage.setScene(new_user_scene);
         admin_stage.show();

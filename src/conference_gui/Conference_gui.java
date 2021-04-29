@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.scene.Scene;
@@ -29,7 +27,6 @@ public class Conference_gui extends Application {
 
     Map map;
     public static void main(String[] args) throws FileNotFoundException {
-//        Map map=mapsFile();
         launch(args);
     }
 
@@ -54,6 +51,7 @@ public class Conference_gui extends Application {
         
         Button log_in_btn=new Button("Log In");
         Button create_user_btn=new Button("Create User");
+        create_user_btn.setId("create_btn");
         
         Label error=new Label();
         error.setVisible(false);
@@ -129,8 +127,8 @@ public class Conference_gui extends Application {
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(20);
 
-        Scene logInScene=new Scene(vbox, 800, 875);
-        logInScene.getStylesheets().add("styles.css");
+        Scene logInScene=new Scene(vbox, 850, 600);
+        logInScene.getStylesheets().add("log_in.css");
         logInStage.setTitle("Log In");
         logInStage.setScene(logInScene);
         logInStage.show();
