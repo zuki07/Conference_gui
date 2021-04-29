@@ -29,7 +29,7 @@
     -fx-scale-x: 1.1;
 }
 
-#create_btn:hover{
+#create_btn:hover, #back_btn:hover{
     -fx-rotate: -3;
 }
 

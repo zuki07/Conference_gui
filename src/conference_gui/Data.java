@@ -74,4 +74,22 @@ public class Data {
             System.out.println(ex);
         }
     }
+    
+    public static void replaceData(Map changed_map) throws FileNotFoundException{
+        try {
+            FileWriter fwriter;
+            new FileWriter("data/database.txt", false).close();
+            fwriter=new FileWriter("data/database.txt", true);
+            PrintWriter output_file;
+            output_file = new PrintWriter(fwriter);
+            changed_map.forEach((key,value)->{
+                List<String> values=(List<String>) changed_map.get(key);
+                output_file.println(key+":"+values.get(0)+","+values.get(1));
+                    });
+            output_file.close();
+
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
 }

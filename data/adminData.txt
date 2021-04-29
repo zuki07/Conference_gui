@@ -1,4 +1,4 @@
-general:999
+general:895
 java:400
 student:899
 web:295

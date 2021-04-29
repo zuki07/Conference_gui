@@ -157,7 +157,7 @@ public class Admin {
                 Data.writeAdminData(admin_map);
                 error_label.setVisible(true);
                 error_label.setText("Values Saved");
-                error_label.setStyle("-fx-background-color: green;");
+                error_label.setStyle("-fx-background-color: rgb(0,255,0);");
             } 
             catch (FileNotFoundException ex) {
                 System.out.println(ex);
