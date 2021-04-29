@@ -66,7 +66,7 @@ public class NewUser{
             else{  
                 Map map;
                 try {
-                    map = FileData.readFile();
+                    map = Data.readDataFile();
                     Set<String> keys=map.keySet();
                     System.out.println(keys);
                     for(String k:keys){
@@ -82,7 +82,7 @@ public class NewUser{
                         }
                     }
                     if(key_found==false){
-                        conference_gui.FileData.writeFile(new_user_name, new_password, secure_question); 
+                        conference_gui.Data.writeDataFile(new_user_name, new_password, secure_question); 
                         Conference_gui c_gui;
                         c_gui = new Conference_gui();
                         c_gui.start(newUserStage);

@@ -11,15 +11,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 
@@ -32,7 +34,7 @@ public class Conference_gui extends Application {
     }
 
     public Conference_gui() throws FileNotFoundException {
-        this.map = FileData.readFile();
+        this.map = Data.readDataFile();
         
     }
 
@@ -44,7 +46,7 @@ public class Conference_gui extends Application {
         user_name.setPromptText("--User Name--");
         user_name.setFocusTraversable(false);
         
-        TextField password=new TextField();
+        PasswordField password=new PasswordField();
         password.setAlignment(Pos.CENTER);
         password.setMaxWidth(350);
         password.setPromptText("--Password--");
@@ -91,11 +93,19 @@ public class Conference_gui extends Application {
                     if(password_value!=null){
                         if(password.getText().equals(password_value)){
                             if(user_name.getText().equalsIgnoreCase("admin")){
-                                System.out.println("found admin");
+                                Admin admin=new Admin();
+                                admin.adminStage();
+                                user_name.clear();
+                                password.clear();
+//                                logInStage.close();
                             }
                             else{
                                 User_gui user_gui=new User_gui();
-                                user_gui.start();
+                                try {
+                                    user_gui.start();
+                                } catch (FileNotFoundException ex) {
+                                    System.out.println(ex);
+                                }
                                 logInStage.close();
                             }
                         }

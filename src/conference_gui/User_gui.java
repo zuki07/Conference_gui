@@ -1,6 +1,9 @@
 
 package conference_gui;
 
+import java.io.FileNotFoundException;
+import java.util.Map;
+import java.util.logging.Level;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
@@ -19,25 +22,23 @@ public class User_gui{
            person3="3 People",
            person4="4 People";
 
-//    public static void main(String[] args) {
-//        launch(args);
-//    }
-
     
-    public void start() {
+    public void start() throws FileNotFoundException {
         
         Stage userStage=new Stage();
+        Map user_price=Data.readAdminData();
+
         
 //                                SETUP LABELS & BUTTON
-        Label general_label=new Label("General Registration: $895/person");
-        Label student_label=new Label("Student Registration: $495/person");
+        Label general_label=new Label("General Registration: $"+user_price.get("general"));
+        Label student_label=new Label("Student Registration: $"+user_price.get("student"));
         Label workshop_label=new Label("Optional Workshops");
         workshop_label.setId("h1");
-        Label dinner_label=new Label("Optional Night Dinner: $30/person");
-        Label commerce_label=new Label("Introduction to E-commerce: $295/person");
-        Label web_label=new Label("The Future of the Web: $295/person");
-        Label java_label=new Label("Advanced Java Programming: $395/person");
-        Label network_label=new Label("Network Security: $395/person");
+        Label dinner_label=new Label("Optional Night Dinner: $"+user_price.get("dinner"));
+        Label commerce_label=new Label("Introduction to E-commerce: $"+user_price.get("commerce"));
+        Label web_label=new Label("The Future of the Web: $"+user_price.get("web"));
+        Label java_label=new Label("Advanced Java Programming: $"+user_price.get("java"));
+        Label network_label=new Label("Network Security: $"+user_price.get("network"));
         
         Label total_label=new Label();
         total_label.setId("total_label");                                           //total label ID
