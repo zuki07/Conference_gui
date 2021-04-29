@@ -1,6 +1,6 @@
 general:999
 java:400
-student:875
+student:899
 web:295
 commerce:500
 dinner:100

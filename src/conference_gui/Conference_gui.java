@@ -94,7 +94,7 @@ public class Conference_gui extends Application {
                             admin.adminStage();
                             user_name.clear();
                             password.clear();
-//                                logInStage.close();
+                            logInStage.close();
                         }
                         else{
                             User_gui user_gui=new User_gui();

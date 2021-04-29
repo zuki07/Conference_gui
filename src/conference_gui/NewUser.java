@@ -7,8 +7,6 @@ package conference_gui;
 import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
@@ -104,7 +102,7 @@ public class NewUser{
                 c_gui = new Conference_gui();
                 c_gui.start(newUserStage);
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(NewUser.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex);
             }
         });
 
