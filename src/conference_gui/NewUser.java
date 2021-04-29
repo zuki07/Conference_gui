@@ -44,7 +44,8 @@ public class NewUser{
         
         Button create_btn=new Button("Submit");
         Button back_btn=new Button("Back");
-        back_btn.setVisible(false);
+        back_btn.setId("back_btn");
+//        back_btn.setVisible(false);
         
         Label new_error=new Label();
         new_error.setVisible(false);
@@ -111,8 +112,8 @@ public class NewUser{
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(20);
         
-        Scene new_user_scene = new Scene(vbox, 800, 875);
-        new_user_scene.getStylesheets().add("styles.css");
+        Scene new_user_scene = new Scene(vbox, 850, 600);
+        new_user_scene.getStylesheets().add("log_in.css");
         newUserStage.setTitle("Create User");
         newUserStage.setScene(new_user_scene);
         newUserStage.show();

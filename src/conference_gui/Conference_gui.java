@@ -50,6 +50,7 @@ public class Conference_gui extends Application {
         password.setFocusTraversable(false);
         
         Button log_in_btn=new Button("Log In");
+        Button reset_btn=new Button("Reset Password");
         Button create_user_btn=new Button("Create User");
         create_user_btn.setId("create_btn");
         
@@ -121,8 +122,14 @@ public class Conference_gui extends Application {
                 newUser.startNewUser();
                 logInStage.close();
         });
+        
+        reset_btn.setOnAction(event ->{
+            ResetPassword reset_stage=new ResetPassword();
+            reset_stage.startReset();
+            logInStage.close();
+        });
 
-        VBox vbox=new VBox(user_name, password, log_in_btn, create_user_btn, error);
+        VBox vbox=new VBox(user_name, password, log_in_btn, create_user_btn, reset_btn, error);
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(20);
 
