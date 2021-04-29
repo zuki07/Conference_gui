@@ -86,32 +86,31 @@ public class Conference_gui extends Application {
                     password.clear();
                 }
                 else if(key_found==true){
-                    List<Object> value_list=(List<Object>) map.get(user_name.getText());
+                    List<Object> value_list=(List<Object>) map.get(user_name.getText().toLowerCase());
                     Object password_value=value_list.get(0);
-                    if(password_value!=null){
-                        if(password.getText().equals(password_value)){
-                            if(user_name.getText().equalsIgnoreCase("admin")){
-                                Admin admin=new Admin();
-                                admin.adminStage();
-                                user_name.clear();
-                                password.clear();
-//                                logInStage.close();
-                            }
-                            else{
-                                User_gui user_gui=new User_gui();
-                                try {
-                                    user_gui.start();
-                                } catch (FileNotFoundException ex) {
-                                    System.out.println(ex);
-                                }
-                                logInStage.close();
-                            }
+                    if(password.getText().equals(password_value)){
+                        if("admin".equalsIgnoreCase(user_name.getText())){
+                            Admin admin=new Admin();
+                            admin.adminStage();
+                            user_name.clear();
+                            password.clear();
+                            logInStage.close();
                         }
                         else{
-                            error.setVisible(true);
-                            error.setText("The password is invalid");
-                            password.clear();
+                            User_gui user_gui=new User_gui();
+                            try {
+                                user_gui.start();
+                            } 
+                            catch (FileNotFoundException ex) {
+                                System.out.println(ex);
+                            }
+                            logInStage.close();
                         }
+                    }
+                    else{
+                        error.setVisible(true);
+                        error.setText("The password is invalid");
+                        password.clear();
                     }
                 }
             }

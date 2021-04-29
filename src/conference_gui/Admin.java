@@ -18,6 +18,8 @@ import javafx.stage.Stage;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.TextAlignment;
 
 
 public class Admin {
@@ -30,7 +32,9 @@ public class Admin {
             commerce_txt="Current E-commerce Price: $",
             web_txt="Current Web Price: $",
             java_txt="Current Advanced Java Price: $",
-            network_txt="Current Network Security Price: $";
+            network_txt="Current Network Security Price: $",
+            error_txt="Not a whole number\nPlease try a different value";
+    
     
     public static void main(String[] args) {
         launch(args);
@@ -103,33 +107,57 @@ public class Admin {
         Label network_current=new Label(network_txt+admin_map.get("network"));
         Button network_btn=new Button("Set Price");
 
+        Button exit_btn=new Button("Exit");
         Button save_btn=new Button("Save Changes");
+        Label error_label=new Label();
+        error_label.setVisible(false);
+        error_label.setId("error_label");
+        error_label.setTextAlignment(TextAlignment.CENTER);
         
         general_btn.setOnAction(event ->{
-            buttonEvent(general_current, general_input, "general", general_txt);
+            buttonEvent(general_current, general_input, 
+                            "general", general_txt, error_label);
         });
         student_btn.setOnAction(event ->{
-            buttonEvent(student_current, student_input, "student", student_txt);
+            buttonEvent(student_current, student_input, 
+                       "student", student_txt, error_label);
         });
         dinner_btn.setOnAction(event ->{
-            buttonEvent(dinner_current, dinner_input, "dinner", dinner_txt);
+            buttonEvent(dinner_current, dinner_input, 
+                        "dinner", dinner_txt, error_label);
         });
         commerce_btn.setOnAction(event ->{
-            buttonEvent(commerce_current, commerce_input, "commerce", commerce_txt);
+            buttonEvent(commerce_current, commerce_input, 
+                        "commerce", commerce_txt, error_label);
         });
         web_btn.setOnAction(event ->{
-            buttonEvent(web_current, web_input, "web", web_txt);
+            buttonEvent(web_current, web_input, 
+                    "web", web_txt, error_label);
         });
         java_btn.setOnAction(event ->{
-            buttonEvent(java_current, java_input, "java", java_txt);
+            buttonEvent(java_current, java_input, 
+                    "java", java_txt, error_label);
         });
         network_btn.setOnAction(event ->{
-            buttonEvent(network_current, network_input, "network", network_txt);
+            buttonEvent(network_current, network_input, 
+                        "network", network_txt, 
+                        error_label);
+        });
+        exit_btn.setOnAction(event ->{
+            admin_stage.close();
+            try {
+                Conference_gui main=new Conference_gui();
+                main.start(admin_stage);
+            } catch (FileNotFoundException ex) {
+                System.out.println(ex);
+            }
         });
         save_btn.setOnAction(event ->{
-            System.out.println(admin_map);
             try {
                 Data.writeAdminData(admin_map);
+                error_label.setVisible(true);
+                error_label.setText("Values Saved");
+                error_label.setStyle("-fx-background-color: green;");
             } 
             catch (FileNotFoundException ex) {
                 System.out.println(ex);
@@ -172,8 +200,14 @@ public class Admin {
         grid.add(network_input, 1, 6);
         grid.add(network_btn, 2, 6);
         
-        grid.add(save_btn, 0, 7, 3, 1);
-        GridPane.setHalignment(save_btn, HPos.CENTER);
+        HBox hbox=new HBox(exit_btn, save_btn);
+        hbox.setAlignment(Pos.CENTER);
+        hbox.setSpacing(20);
+        grid.add(hbox, 0, 7, 3, 1);
+        GridPane.setHalignment(exit_btn, HPos.CENTER);
+        
+        grid.add(error_label, 0, 8, 3, 1);
+        GridPane.setHalignment(error_label, HPos.CENTER);
         
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
@@ -187,10 +221,23 @@ public class Admin {
         admin_stage.show();
     }
     
-    public void buttonEvent(Label label, TextField input, String map_value, String txt){
-        admin_map.replace(map_value, input.getText());
-            input.clear();
-            label.setText(txt+admin_map.get(map_value));
+    public void buttonEvent(Label label, TextField input, 
+                                String map_value, String txt, 
+                                Label error){
+        error.setStyle("");
+        try{
+                Integer.parseInt(input.getText());
+                error.setVisible(false);
+                input.setStyle("");
+                admin_map.replace(map_value, input.getText());
+                input.clear();
+                label.setText(txt+admin_map.get(map_value));
+            }
+            catch(NumberFormatException nfe){
+                error.setVisible(true);
+                error.setText(error_txt);
+                input.setStyle("-fx-background-color: red;");
+            }
     }
 
 }
