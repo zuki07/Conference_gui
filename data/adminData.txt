@@ -1,7 +1,0 @@
-general:895
-java:400
-student:899
-web:295
-commerce:500
-dinner:100
-network:400

@@ -6,6 +6,7 @@ package conference_gui;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,8 +31,8 @@ public class Conference_gui extends Application {
         launch(args);
     }
 
-    public Conference_gui() throws FileNotFoundException {
-        this.map = Data.readDataFile();
+    public Conference_gui() throws IOException {
+        this.map = Datas.readDataFile();
         
     }
 
@@ -91,18 +92,23 @@ public class Conference_gui extends Application {
                     Object password_value=value_list.get(0);
                     if(password.getText().equals(password_value)){
                         if("admin".equalsIgnoreCase(user_name.getText())){
-                            Admin admin=new Admin();
-                            admin.adminStage();
-                            user_name.clear();
-                            password.clear();
-                            logInStage.close();
+                            Admin admin;
+                            try {
+                                admin = new Admin();
+                                admin.adminStage();
+                                user_name.clear();
+                                password.clear();
+                                logInStage.close();
+                            } catch (IOException ex) {
+                                System.out.println(ex);
+                            }
                         }
                         else{
                             User_gui user_gui=new User_gui();
                             try {
                                 user_gui.start();
                             } 
-                            catch (FileNotFoundException ex) {
+                            catch (IOException ex) {
                                 System.out.println(ex);
                             }
                             logInStage.close();

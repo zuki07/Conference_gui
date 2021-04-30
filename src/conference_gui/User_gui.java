@@ -1,7 +1,7 @@
 
 package conference_gui;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Map;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
@@ -22,10 +22,10 @@ public class User_gui{
            person4="4 People";
 
     
-    public void start() throws FileNotFoundException {
+    public void start() throws IOException {
         
         Stage userStage=new Stage();
-        Map user_price=Data.readAdminData();
+        Map user_price=Datas.readAdminData();
 
         
 //                                SETUP LABELS & BUTTON

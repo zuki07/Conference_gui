@@ -4,7 +4,7 @@
 
 package conference_gui;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -75,7 +75,7 @@ public class ResetPassword{
             else{  
                 Map map;
                 try {
-                    map = Data.readDataFile();
+                    map = Datas.readDataFile();
                     Set<String> keys=map.keySet();
                     for(String k:keys){
                         if(k.equalsIgnoreCase(user_name.getText())){
@@ -85,7 +85,7 @@ public class ResetPassword{
                             new_password.getText().equals(confirm_password.getText())){
                                 value_list.set(0, new_password.getText());
                                 map.replace(k, value_list);
-                                Data.replaceData(map);
+                                Datas.replaceData(map);
                                 new_error.setVisible(true);
                                 new_error.setText("New Password is Saved");
                                 new_error.setStyle("-fx-background-color: rgb(0,255,0);");
@@ -121,7 +121,7 @@ public class ResetPassword{
                             secure_question.clear();
                         }
                     }
-                } catch (FileNotFoundException ex) {
+                } catch (IOException ex) {
                     System.out.println(ex);
                 }     
             }        
@@ -133,7 +133,7 @@ public class ResetPassword{
             try {
                 c_gui = new Conference_gui();
                 c_gui.start(newUserStage);
-            } catch (FileNotFoundException ex) {
+            } catch (IOException ex) {
                 System.out.println(ex);
             }
         });
