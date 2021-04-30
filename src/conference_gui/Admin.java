@@ -5,6 +5,7 @@
 package conference_gui;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,11 +41,11 @@ public class Admin {
         launch(args);
     }
 
-    public Admin() {
+    public Admin() throws IOException {
         try {
-            this.admin_map = Data.readAdminData();
+            this.admin_map = Datas.readAdminData();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
     }
 
@@ -154,12 +155,12 @@ public class Admin {
         });
         save_btn.setOnAction(event ->{
             try {
-                Data.writeAdminData(admin_map);
+                Datas.writeAdminData(admin_map);
                 error_label.setVisible(true);
                 error_label.setText("Values Saved");
                 error_label.setStyle("-fx-background-color: rgb(0,255,0);");
             } 
-            catch (FileNotFoundException ex) {
+            catch (IOException ex) {
                 System.out.println(ex);
             }
         });

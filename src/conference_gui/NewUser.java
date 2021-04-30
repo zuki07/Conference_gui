@@ -5,6 +5,7 @@
 package conference_gui;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 import javafx.scene.Scene;
@@ -65,7 +66,7 @@ public class NewUser{
             else{  
                 Map map;
                 try {
-                    map = Data.readDataFile();
+                    map = Datas.readDataFile();
                     Set<String> keys=map.keySet();
                     System.out.println(keys);
                     for(String k:keys){
@@ -81,12 +82,12 @@ public class NewUser{
                         }
                     }
                     if(key_found==false){
-                        conference_gui.Data.writeDataFile(new_user_name, new_password, secure_question); 
+                        conference_gui.Datas.writeDataFile(new_user_name, new_password, secure_question); 
                         Conference_gui c_gui;
                         c_gui = new Conference_gui();
                         c_gui.start(newUserStage);
                     }
-                } catch (FileNotFoundException ex) {
+                } catch (IOException ex) {
                     System.out.println(ex);
                 }     
             }
