@@ -4,7 +4,6 @@
 
 package conference_gui;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -134,7 +133,7 @@ public class ResetPassword{
             try {
                 c_gui = new Conference_gui();
                 c_gui.start(newUserStage);
-            } catch (FileNotFoundException ex) {
+            } catch (IOException ex) {
                 System.out.println(ex);
             }
         });

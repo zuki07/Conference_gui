@@ -7,8 +7,6 @@ package conference_gui;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import static javafx.application.Application.launch;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -149,7 +147,7 @@ public class Admin {
             try {
                 Conference_gui main=new Conference_gui();
                 main.start(admin_stage);
-            } catch (FileNotFoundException ex) {
+            } catch (IOException ex) {
                 System.out.println(ex);
             }
         });

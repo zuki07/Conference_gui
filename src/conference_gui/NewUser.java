@@ -103,7 +103,7 @@ public class NewUser{
             try {
                 c_gui = new Conference_gui();
                 c_gui.start(newUserStage);
-            } catch (FileNotFoundException ex) {
+            } catch (IOException ex) {
                 System.out.println(ex);
             }
         });
