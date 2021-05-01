@@ -48,6 +48,8 @@ public class User_gui{
         Button total_btn=new Button("Get Total");
         Button clear_btn=new Button("Clear All");
         clear_btn.setId("clear_btn");
+        Button logout_btn=new Button("Log Out");
+        logout_btn.setId("logout_btn");
                             
 //                                SETUP COMBO BOX SELECTIONS
         ComboBox<String> general=new ComboBox<>();
@@ -165,6 +167,18 @@ public class User_gui{
               buttonEvents.displayNewStage();                                                                                    //display new stage
         });
         
+//                                    LOG OUT BUTTON LAMBDA
+        logout_btn.setOnAction(event ->{
+           userStage.close();
+           Conference_gui c_gui;
+            try {
+                c_gui = new Conference_gui();
+                c_gui.start(userStage);
+            } catch (IOException ex) {
+                System.out.println(ex);
+            }
+        });
+        
         
 //                                  GRID LAYOUT
         GridPane grid_pane=new GridPane();
@@ -199,6 +213,9 @@ public class User_gui{
         grid_pane.add(network_label, 0, 10);                                        //network label and combo box
         GridPane.setHalignment(network_label, HPos.RIGHT);
         grid_pane.add(network, 1, 10);
+        
+        grid_pane.add(logout_btn, 0, 11);
+        GridPane.setHalignment(logout_btn, HPos.RIGHT);
         
         grid_pane.add(total_btn, 1, 11);                                            //total button
         

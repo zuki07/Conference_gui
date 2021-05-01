@@ -68,7 +68,7 @@
     -fx-scale-x: 1.1;
 }
 
-#clear_btn:hover{
+#clear_btn:hover, #logout_btn:hover{
     -fx-rotate: -3;
 }
 
