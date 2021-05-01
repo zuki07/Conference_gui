@@ -4,7 +4,6 @@
 
 package conference_gui;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
@@ -24,24 +23,17 @@ public class NewUser{
         
         Stage newUserStage=new Stage();
         
+        double text_width=350;
+        Pos text_pos=Pos.CENTER;
         
-        TextField new_user_name=new TextField();
-        new_user_name.setAlignment(Pos.CENTER);
-        new_user_name.setMaxWidth(350);
-        new_user_name.setPromptText("--New User--");
-        new_user_name.setFocusTraversable(false);
-        
-        TextField new_password=new TextField();
-        new_password.setAlignment(Pos.CENTER);
-        new_password.setMaxWidth(350);
-        new_password.setPromptText("--New Password--");
-        new_password.setFocusTraversable(false);
-        
-        TextField secure_question=new TextField();
-        secure_question.setAlignment(Pos.CENTER);
-        secure_question.setMaxWidth(350);
-        secure_question.setPromptText("--What is your favorite movie?--");
-        secure_question.setFocusTraversable(false);
+        FxElements new_user_element=new FxElements();
+        TextField new_user_name=new_user_element.setTextField(text_pos, text_width, "--New User--");
+
+        FxElements new_password_element=new FxElements();
+        TextField new_password=new_password_element.setTextField(text_pos, text_width, "--New User--");
+
+        FxElements question_element=new FxElements();
+        TextField secure_question=question_element.setTextField(text_pos, text_width, "--What is your favorite movie?--");
         
         Button create_btn=new Button("Submit");
         Button back_btn=new Button("Back");
