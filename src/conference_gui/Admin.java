@@ -7,7 +7,6 @@ package conference_gui;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
-import static javafx.application.Application.launch;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -34,10 +33,6 @@ public class Admin {
             network_txt="Current Network Security Price: $",
             error_txt="Not a whole number\nPlease try a different value";
     
-    
-    public static void main(String[] args) {
-        launch(args);
-    }
 
     public Admin() throws IOException {
         try {
@@ -50,64 +45,47 @@ public class Admin {
     public void adminStage() {
         Stage admin_stage=new Stage();
         
-        TextField general_input=new TextField();
-        general_input.setAlignment(Pos.CENTER);
-        general_input.setMaxWidth(200);
-        general_input.setPromptText("--General Registration--");
-        general_input.setFocusTraversable(false);
+        double text_width=200;
+        Pos text_position=Pos.CENTER;
+
+        FxElements general_element=new FxElements();
+        TextField general_input=general_element.setTextField(text_position, text_width, "--General Registration--");
         Label general_current=new Label(general_txt+admin_map.get("general"));
         Button general_btn=new Button("Set Price");
-        
-        TextField student_input=new TextField();
-        student_input.setAlignment(Pos.CENTER);
-        student_input.setMaxWidth(200);
-        student_input.setPromptText("--Student Registration--");
-        student_input.setFocusTraversable(false);
+
+        FxElements student_element=new FxElements();
+        TextField student_input=student_element.setTextField(text_position, text_width, "--Student Registration--");
         Label student_current=new Label(student_txt+admin_map.get("student"));
         Button student_btn=new Button("Set Price");
-        
-        TextField dinner_input=new TextField();
-        dinner_input.setAlignment(Pos.CENTER);
-        dinner_input.setMaxWidth(200);
-        dinner_input.setPromptText("--Night Dinner--");
-        dinner_input.setFocusTraversable(false);
+
+        FxElements dinner_element=new FxElements();
+        TextField dinner_input=dinner_element.setTextField(text_position, text_width, "--Night Dinner--");
         Label dinner_current=new Label(dinner_txt+admin_map.get("dinner"));
         Button dinner_btn=new Button("Set Price");
-        
-        TextField commerce_input=new TextField();
-        commerce_input.setAlignment(Pos.CENTER);
-        commerce_input.setMaxWidth(200);
-        commerce_input.setPromptText("--E-commerce--");
-        commerce_input.setFocusTraversable(false);
+
+        FxElements commerce_element=new FxElements();
+        TextField commerce_input=commerce_element.setTextField(text_position, text_width, "--E-commerce--");
         Label commerce_current=new Label(commerce_txt+admin_map.get("commerce"));
         Button commerce_btn=new Button("Set Price");
-        
-        TextField web_input=new TextField();
-        web_input.setAlignment(Pos.CENTER);
-        web_input.setMaxWidth(200);
-        web_input.setPromptText("--Web--");
-        web_input.setFocusTraversable(false);
+
+        FxElements web_element=new FxElements();
+        TextField web_input=web_element.setTextField(text_position, text_width, "--Web--");
         Label web_current=new Label(web_txt+admin_map.get("web"));
         Button web_btn=new Button("Set Price");
-        
-        TextField java_input=new TextField();
-        java_input.setAlignment(Pos.CENTER);
-        java_input.setMaxWidth(200);
-        java_input.setPromptText("--Advanced Java--");
-        java_input.setFocusTraversable(false);
+
+        FxElements java_element=new FxElements();
+        TextField java_input=java_element.setTextField(text_position, text_width, "--Advanced Java--");
         Label java_current=new Label(java_txt+admin_map.get("java"));
         Button java_btn=new Button("Set Price");
-        
-        TextField network_input=new TextField();
-        network_input.setAlignment(Pos.CENTER);
-        network_input.setMaxWidth(200);
-        network_input.setPromptText("--Network Security--");
-        network_input.setFocusTraversable(false);
+
+        FxElements network_element=new FxElements();
+        TextField network_input=network_element.setTextField(text_position, text_width, "--Network Security--");
         Label network_current=new Label(network_txt+admin_map.get("network"));
         Button network_btn=new Button("Set Price");
 
         Button exit_btn=new Button("Exit");
         Button save_btn=new Button("Save Changes");
+        
         Label error_label=new Label();
         error_label.setVisible(false);
         error_label.setId("error_label");
@@ -164,40 +142,15 @@ public class Admin {
         });
         
         GridPane grid=new GridPane();
-        grid.add(general_current, 0, 0);
-        GridPane.setHalignment(general_current, HPos.RIGHT);
-        grid.add(general_input, 1, 0);
-        grid.add(general_btn, 2, 0);
+        FxElements grid_add=new FxElements();
         
-        grid.add(student_current, 0, 1);
-        GridPane.setHalignment(student_current, HPos.RIGHT);
-        grid.add(student_input, 1, 1);
-        grid.add(student_btn, 2, 1);
-        
-        grid.add(dinner_current, 0, 2);
-        GridPane.setHalignment(dinner_current, HPos.RIGHT);
-        grid.add(dinner_input, 1, 2);
-        grid.add(dinner_btn, 2, 2);
-        
-        grid.add(commerce_current, 0, 3);
-        GridPane.setHalignment(commerce_current, HPos.RIGHT);
-        grid.add(commerce_input, 1, 3);
-        grid.add(commerce_btn, 2, 3);
-        
-        grid.add(web_current, 0, 4);
-        GridPane.setHalignment(web_current, HPos.RIGHT);
-        grid.add(web_input, 1, 4);
-        grid.add(web_btn, 2, 4);
-        
-        grid.add(java_current, 0, 5);
-        GridPane.setHalignment(java_current, HPos.RIGHT);
-        grid.add(java_input, 1, 5);
-        grid.add(java_btn, 2, 5);
-        
-        grid.add(network_current, 0, 6);
-        GridPane.setHalignment(network_current, HPos.RIGHT);
-        grid.add(network_input, 1, 6);
-        grid.add(network_btn, 2, 6);
+        grid_add.setGridAdd(grid, general_current, general_input, general_btn, 0);
+        grid_add.setGridAdd(grid, student_current, student_input, student_btn, 1);
+        grid_add.setGridAdd(grid, dinner_current, dinner_input, dinner_btn, 2);
+        grid_add.setGridAdd(grid, commerce_current, commerce_input, commerce_btn, 3);
+        grid_add.setGridAdd(grid, web_current, web_input, web_btn, 4);
+        grid_add.setGridAdd(grid, java_current, java_input, java_btn, 5);
+        grid_add.setGridAdd(grid, network_current, network_input, network_btn, 6);
         
         HBox hbox=new HBox(exit_btn, save_btn);
         hbox.setAlignment(Pos.CENTER);

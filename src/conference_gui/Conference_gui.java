@@ -4,14 +4,10 @@
 
 package conference_gui;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.scene.Scene;
@@ -38,17 +34,11 @@ public class Conference_gui extends Application {
 
     @Override
     public void start(Stage logInStage) {
-        TextField user_name=new TextField();
-        user_name.setAlignment(Pos.CENTER);
-        user_name.setMaxWidth(350);
-        user_name.setPromptText("--User Name--");
-        user_name.setFocusTraversable(false);
+        FxElements user_name_element=new FxElements();
+        TextField user_name=user_name_element.setTextField(Pos.CENTER, 350, "--User Name--");
         
-        PasswordField password=new PasswordField();
-        password.setAlignment(Pos.CENTER);
-        password.setMaxWidth(350);
-        password.setPromptText("--Password--");
-        password.setFocusTraversable(false);
+        FxElements password_element=new FxElements();
+        PasswordField password=password_element.setPasswordField(Pos.CENTER, 350, "--Password--");
         
         Button log_in_btn=new Button("Log In");
         Button reset_btn=new Button("Reset Password");
@@ -71,53 +61,40 @@ public class Conference_gui extends Application {
             else{
                 error.setVisible(false);
                 error.setText("");
-                boolean key_found=false;
-                Set<String> keys=map.keySet();
-                
-                for(String k:keys){
-                    if(k.equalsIgnoreCase(user_name.getText())){
-                        error.setVisible(false);
-                        key_found=true;
-                        break;
-                    }
-                }
-                if(key_found==false){
+                if(!map.containsKey(user_name.getText().toLowerCase())){
                     error.setVisible(true);
-                    error.setText("User name does not exist");
+                    error.setText(user_name.getText()+" user does not exist");
                     user_name.clear();
                     password.clear();
+                    return;
                 }
-                else if(key_found==true){
-                    List<Object> value_list=(List<Object>) map.get(user_name.getText().toLowerCase());
-                    Object password_value=value_list.get(0);
-                    if(password.getText().equals(password_value)){
-                        if("admin".equalsIgnoreCase(user_name.getText())){
-                            Admin admin;
-                            try {
-                                admin = new Admin();
-                                admin.adminStage();
-                                user_name.clear();
-                                password.clear();
-                                logInStage.close();
-                            } catch (IOException ex) {
-                                System.out.println(ex);
-                            }
-                        }
-                        else{
-                            User_gui user_gui=new User_gui();
-                            try {
-                                user_gui.start();
-                            } 
-                            catch (IOException ex) {
-                                System.out.println(ex);
-                            }
-                            logInStage.close();
-                        }
-                    }
-                    else{
+                List<Object> value_list=(List<Object>) map.get(user_name.getText().toLowerCase());
+                Object password_value=value_list.get(0);
+                if(!password.getText().equals(password_value)){
                         error.setVisible(true);
                         error.setText("The password is invalid");
                         password.clear();
+                }
+                else if(!"admin".equalsIgnoreCase(user_name.getText())){
+                    User_gui user_gui=new User_gui();
+                    try {
+                        user_gui.start();
+                        logInStage.close();
+                    } 
+                    catch (IOException ex) {
+                        System.out.println(ex);
+                    }
+                }
+                else{
+                    Admin admin;
+                    try {
+                        admin = new Admin();
+                        admin.adminStage();
+                        user_name.clear();
+                        password.clear();
+                        logInStage.close();
+                    } catch (IOException ex) {
+                        System.out.println(ex);
                     }
                 }
             }
@@ -145,17 +122,4 @@ public class Conference_gui extends Application {
         logInStage.setScene(logInScene);
         logInStage.show();
     }
-    
-    public static Map mapsFile() throws FileNotFoundException{
-        File file=new File("maps.txt");
-        Scanner input_file=new Scanner(file);
-        Map<String, String> map=new HashMap<>();
-        while(input_file.hasNext()){
-            String key=input_file.nextLine();
-            String [] token=key.split(":");
-            map.put(token[0], token[1]);
-        }
-        return map;
-    }
-
 }
