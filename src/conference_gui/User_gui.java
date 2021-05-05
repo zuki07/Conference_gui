@@ -25,8 +25,8 @@ public class User_gui{
     public void start() throws IOException {
         
         Stage userStage=new Stage();
-        Map user_price=Datas.readAdminData();
-
+        Datas data=new Datas();
+        Map user_price=data.getAdminMap();
         
 //                                SETUP LABELS & BUTTON
         Label general_label=new Label("General Registration: $"+user_price.get("general"));
@@ -171,8 +171,8 @@ public class User_gui{
         logout_btn.setOnAction(event ->{
            userStage.close();
            Conference_gui c_gui;
+            c_gui = new Conference_gui();
             try {
-                c_gui = new Conference_gui();
                 c_gui.start(userStage);
             } catch (IOException ex) {
                 System.out.println(ex);
