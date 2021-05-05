@@ -5,8 +5,8 @@
 package conference_gui;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
@@ -19,9 +19,10 @@ import javafx.scene.control.TextField;
 public class NewUser{
 
 
-    public void startNewUser() {
+    public void startNewUser() throws IOException {
         
         Stage newUserStage=new Stage();
+        Datas data=new Datas();
         
         double text_width=350;
         Pos text_pos=Pos.CENTER;
@@ -30,7 +31,7 @@ public class NewUser{
         TextField new_user_name=new_user_element.setTextField(text_pos, text_width, "--New User--");
 
         FxElements new_password_element=new FxElements();
-        TextField new_password=new_password_element.setTextField(text_pos, text_width, "--New User--");
+        TextField new_password=new_password_element.setTextField(text_pos, text_width, "--Password--");
 
         FxElements question_element=new FxElements();
         TextField secure_question=question_element.setTextField(text_pos, text_width, "--What is your favorite movie?--");
@@ -46,8 +47,7 @@ public class NewUser{
 
         create_btn.setOnAction(event ->{
             new_error.setVisible(false);
-            boolean key_found=false;
-            if(new_user_name.getText().equals("")){
+            if(new_user_name.getText().isEmpty()){
                 new_error.setVisible(true);
                 new_error.setText("Please enter a user name");
             }
@@ -55,33 +55,43 @@ public class NewUser{
                 new_error.setVisible(true);
                 new_error.setText("Please enter a password");
             }
+            else if(secure_question.getText().equals("")){
+                new_error.setVisible(true);
+                new_error.setText("Please enter a sequrity question");
+            }
             else{  
-                Map map;
-                try {
-                    map = Datas.readDataFile();
-                    Set<String> keys=map.keySet();
-                    System.out.println(keys);
-                    for(String k:keys){
-                        if(k.equalsIgnoreCase(new_user_name.getText())){
-                            key_found=true;
-                            new_error.setVisible(true);
-                            new_error.setText("User name already exists");
-                            back_btn.setVisible(true);
-                            break;
-                        }
-                        else{
-                            new_error.setVisible(false);
-                        }
+                Map<String, Map<String, String>> get_user_map=data.getUserMap();
+                if(get_user_map.containsKey(new_user_name.getText())){
+                    new_error.setVisible(true);
+                    new_error.setText("User name already exists");
+                    back_btn.setVisible(true);
+                }
+                else {
+                    Map <String, String> new_user_map=new HashMap<>();
+                    new_user_map.put("password", new_password.getText());
+                    new_user_map.put("question", secure_question.getText());
+                    new_user_map.put("general_info","null");
+                    new_user_map.put("student_info","null");
+                    new_user_map.put("dinner_info","null");
+                    new_user_map.put("commerce_info","null");
+                    new_user_map.put("web_info","null");
+                    new_user_map.put("java_info","null");
+                    new_user_map.put("network_info","null");
+                    new_user_map.put("total_price", "null");
+                    data.addUserToMap(new_user_name.getText(), new_user_map);
+                    try {
+                        data.writeDataFile();
+                    } catch (IOException ex) {
+                        System.out.println(ex);
                     }
-                    if(key_found==false){
-                        conference_gui.Datas.writeDataFile(new_user_name, new_password, secure_question); 
-                        Conference_gui c_gui;
-                        c_gui = new Conference_gui();
+                    Conference_gui c_gui;
+                    c_gui = new Conference_gui();
+                    try {
                         c_gui.start(newUserStage);
+                    } catch (IOException ex) {
+                        System.out.println(ex);
                     }
-                } catch (IOException ex) {
-                    System.out.println(ex);
-                }     
+                }
             }
             new_user_name.clear();
             new_password.clear();
@@ -90,13 +100,12 @@ public class NewUser{
         });
         
         back_btn.setOnAction(event ->{
-            
             Conference_gui c_gui;
+            c_gui = new Conference_gui();
             try {
-                c_gui = new Conference_gui();
                 c_gui.start(newUserStage);
             } catch (IOException ex) {
-                System.out.println(ex);
+                System.out.println(ex);;
             }
         });
 

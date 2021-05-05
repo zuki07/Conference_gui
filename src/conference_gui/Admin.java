@@ -4,7 +4,6 @@
 
 package conference_gui;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
 import javafx.geometry.HPos;
@@ -22,7 +21,6 @@ import javafx.scene.text.TextAlignment;
 
 public class Admin {
 
-    Map<String, String> admin_map;
     
     String general_txt="Current General Registration Price: $",
             student_txt="Current Student Registration Price: $",
@@ -32,14 +30,11 @@ public class Admin {
             java_txt="Current Advanced Java Price: $",
             network_txt="Current Network Security Price: $",
             error_txt="Not a whole number\nPlease try a different value";
-    
+    Datas data;
+    Map admin_map=data.getAdminMap();
 
     public Admin() throws IOException {
-        try {
-            this.admin_map = Datas.readAdminData();
-        } catch (FileNotFoundException ex) {
-            System.out.println(ex);
-        }
+        this.data = new Datas();
     }
 
     public void adminStage() {
@@ -122,16 +117,16 @@ public class Admin {
         });
         exit_btn.setOnAction(event ->{
             admin_stage.close();
+            Conference_gui main=new Conference_gui();
             try {
-                Conference_gui main=new Conference_gui();
                 main.start(admin_stage);
             } catch (IOException ex) {
-                System.out.println(ex);
+                System.out.println(ex);;
             }
         });
         save_btn.setOnAction(event ->{
             try {
-                Datas.writeAdminData(admin_map);
+                data.writeAdminData(admin_map);
                 error_label.setVisible(true);
                 error_label.setText("Values Saved");
                 error_label.setStyle("-fx-background-color: rgb(0,255,0);");
