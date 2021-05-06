@@ -20,6 +20,7 @@ import javafx.scene.control.TextField;
 
 public class Conference_gui extends Application {
 
+    
     public static void main(String[] args) throws FileNotFoundException {
         launch(args);
     }
@@ -28,7 +29,6 @@ public class Conference_gui extends Application {
 
     @Override
     public void start(Stage logInStage) throws IOException{
-        Datas data=new Datas();
         
         FxElements user_name_element=new FxElements();
         TextField user_name=user_name_element.setTextField(Pos.CENTER, 350, "--User Name--");
@@ -46,6 +46,19 @@ public class Conference_gui extends Application {
         error.setId("log_in_error");
         
         log_in_btn.setOnAction(event ->{
+            error.setVisible(false);
+            error.setText("");
+            int count=Datas.getCount();
+            System.out.println("count: "+count);
+            if(count==0){
+                try {
+                Datas.readDataFile();
+                Datas.readAdminMap();
+                Datas.changeCount(1);
+                } catch (IOException ex) {
+                    System.out.println(ex);
+                }
+            }
             if(user_name.getText().equals("")){
                 error.setVisible(true);
                 error.setText("Please enter a user name.");
@@ -54,43 +67,36 @@ public class Conference_gui extends Application {
                 error.setVisible(true);
                 error.setText("Please enter a password.");
             }
-            else{
-                error.setVisible(false);
-                error.setText("");
-                if(!data.getUserMap().containsKey(user_name.getText().toLowerCase())){
+            else if(!Datas.getUserMap().containsKey(user_name.getText().toLowerCase())){
+                error.setVisible(true);
+                error.setText(user_name.getText()+" user does not exist");
+                user_name.clear();
+                password.clear();
+            }
+            else if(!password.getText().equals(Datas.getUserMap().get(user_name.getText()).get("password"))){
                     error.setVisible(true);
-                    error.setText(user_name.getText()+" user does not exist");
-                    user_name.clear();
+                    error.setText("The password is invalid");
                     password.clear();
-                }
-                else if(!password.getText().equals(data.getUserMap().get(user_name.getText()).get("password"))){
-                        error.setVisible(true);
-                        error.setText("The password is invalid");
-                        password.clear();
-                }
-                else if(!"admin".equalsIgnoreCase(user_name.getText())){
-                    User_gui user_gui=new User_gui();
-                    try {
-                        user_gui.start();
-                        logInStage.close();
-                    } 
-                    catch (IOException ex) {
-                        System.out.println(ex);
-                    }
-                }
-                else{
-                    Admin admin;
-                    try {
-                        admin = new Admin();
-                        admin.adminStage();
-                        user_name.clear();
-                        password.clear();
-                        logInStage.close();
-                    } catch (IOException ex) {
-                        System.out.println(ex);
-                    }
+            }
+            else if(!"admin".equalsIgnoreCase(user_name.getText())){
+                User_gui user_gui=new User_gui();
+                try {
+                    user_gui.start();
+                    logInStage.close();
+                } 
+                catch (IOException ex) {
+                    System.out.println(ex);
                 }
             }
+            else{
+                Admin admin;
+                admin = new Admin();
+                admin.adminStage();
+                user_name.clear();
+                password.clear();
+                logInStage.close();
+            }
+            count++;
         });
         
         create_user_btn.setOnAction(event ->{

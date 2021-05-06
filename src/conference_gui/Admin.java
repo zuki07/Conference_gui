@@ -30,12 +30,7 @@ public class Admin {
             java_txt="Current Advanced Java Price: $",
             network_txt="Current Network Security Price: $",
             error_txt="Not a whole number\nPlease try a different value";
-    Datas data;
-    Map admin_map=data.getAdminMap();
-
-    public Admin() throws IOException {
-        this.data = new Datas();
-    }
+    Map admin_map=Datas.getAdminMap();
 
     public void adminStage() {
         Stage admin_stage=new Stage();
@@ -126,7 +121,7 @@ public class Admin {
         });
         save_btn.setOnAction(event ->{
             try {
-                data.writeAdminData(admin_map);
+                conference_gui.Datas.writeAdminData(admin_map);
                 error_label.setVisible(true);
                 error_label.setText("Values Saved");
                 error_label.setStyle("-fx-background-color: rgb(0,255,0);");
