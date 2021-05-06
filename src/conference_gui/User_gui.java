@@ -25,8 +25,7 @@ public class User_gui{
     public void start() throws IOException {
         
         Stage userStage=new Stage();
-        Datas data=new Datas();
-        Map user_price=data.getAdminMap();
+        Map user_price=Datas.getAdminMap();
         
 //                                SETUP LABELS & BUTTON
         Label general_label=new Label("General Registration: $"+user_price.get("general"));

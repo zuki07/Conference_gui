@@ -16,13 +16,13 @@ import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 
 
-public class NewUser{
+public class NewUser {
 
 
     public void startNewUser() throws IOException {
         
         Stage newUserStage=new Stage();
-        Datas data=new Datas();
+//        Datas data=new Datas();
         
         double text_width=350;
         Pos text_pos=Pos.CENTER;
@@ -60,7 +60,7 @@ public class NewUser{
                 new_error.setText("Please enter a sequrity question");
             }
             else{  
-                Map<String, Map<String, String>> get_user_map=data.getUserMap();
+                Map<String, Map<String, String>> get_user_map=Datas.getUserMap();
                 if(get_user_map.containsKey(new_user_name.getText())){
                     new_error.setVisible(true);
                     new_error.setText("User name already exists");
@@ -78,12 +78,7 @@ public class NewUser{
                     new_user_map.put("java_info","null");
                     new_user_map.put("network_info","null");
                     new_user_map.put("total_price", "null");
-                    data.addUserToMap(new_user_name.getText(), new_user_map);
-                    try {
-                        data.writeDataFile();
-                    } catch (IOException ex) {
-                        System.out.println(ex);
-                    }
+                    Datas.addUserToMap(new_user_name.getText(), new_user_map);
                     Conference_gui c_gui;
                     c_gui = new Conference_gui();
                     try {

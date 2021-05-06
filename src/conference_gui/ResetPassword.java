@@ -21,7 +21,6 @@ public class ResetPassword{
     public void startReset() throws IOException {
         
         Stage newUserStage=new Stage();
-        Datas data=new Datas();
         
         double text_width=350;
         Pos text_pos=Pos.CENTER;
@@ -58,7 +57,7 @@ public class ResetPassword{
                 new_error.setText("Please enter a password");
             }
             else{  
-                Map<String, Map<String,String>> map=data.getUserMap();
+                Map<String, Map<String,String>> map=Datas.getUserMap();
                 if(!map.containsKey(user_name.getText().toLowerCase())){
                     new_error.setText("User Names does not Exist");
                     user_name.clear();
@@ -79,7 +78,7 @@ public class ResetPassword{
                 }
                 else{
                     try {
-                        data.replaceUserPassword(user_name.getText(), confirm_password.getText());
+                        Datas.replaceUserPassword(user_name.getText(), confirm_password.getText());
                         new_error.setText("New Password is Saved");
                         new_error.setStyle("-fx-background-color: rgb(0,255,0);");
                         user_name.clear();
