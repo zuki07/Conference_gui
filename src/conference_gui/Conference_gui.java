@@ -6,8 +6,6 @@ package conference_gui;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.scene.Scene;
@@ -22,18 +20,16 @@ import javafx.scene.control.TextField;
 
 public class Conference_gui extends Application {
 
-    Map map;
+    
     public static void main(String[] args) throws FileNotFoundException {
         launch(args);
     }
 
-    public Conference_gui() throws IOException {
-        this.map = Datas.readDataFile();
-        
-    }
+    
 
     @Override
-    public void start(Stage logInStage) {
+    public void start(Stage logInStage) throws IOException{
+        
         FxElements user_name_element=new FxElements();
         TextField user_name=user_name_element.setTextField(Pos.CENTER, 350, "--User Name--");
         
@@ -50,6 +46,19 @@ public class Conference_gui extends Application {
         error.setId("log_in_error");
         
         log_in_btn.setOnAction(event ->{
+            error.setVisible(false);
+            error.setText("");
+            int count=Datas.getCount();
+            System.out.println("count: "+count);
+            if(count==0){
+                try {
+                Datas.readDataFile();
+                Datas.readAdminMap();
+                Datas.changeCount(1);
+                } catch (IOException ex) {
+                    System.out.println(ex);
+                }
+            }
             if(user_name.getText().equals("")){
                 error.setVisible(true);
                 error.setText("Please enter a user name.");
@@ -58,58 +67,56 @@ public class Conference_gui extends Application {
                 error.setVisible(true);
                 error.setText("Please enter a password.");
             }
-            else{
-                error.setVisible(false);
-                error.setText("");
-                if(!map.containsKey(user_name.getText().toLowerCase())){
+            else if(!Datas.getUserMap().containsKey(user_name.getText().toLowerCase())){
+                error.setVisible(true);
+                error.setText(user_name.getText()+" user does not exist");
+                user_name.clear();
+                password.clear();
+            }
+            else if(!password.getText().equals(Datas.getUserMap().get(user_name.getText()).get("password"))){
                     error.setVisible(true);
-                    error.setText(user_name.getText()+" user does not exist");
-                    user_name.clear();
+                    error.setText("The password is invalid");
                     password.clear();
-                    return;
-                }
-                List<Object> value_list=(List<Object>) map.get(user_name.getText().toLowerCase());
-                Object password_value=value_list.get(0);
-                if(!password.getText().equals(password_value)){
-                        error.setVisible(true);
-                        error.setText("The password is invalid");
-                        password.clear();
-                }
-                else if(!"admin".equalsIgnoreCase(user_name.getText())){
-                    User_gui user_gui=new User_gui();
-                    try {
-                        user_gui.start();
-                        logInStage.close();
-                    } 
-                    catch (IOException ex) {
-                        System.out.println(ex);
-                    }
-                }
-                else{
-                    Admin admin;
-                    try {
-                        admin = new Admin();
-                        admin.adminStage();
-                        user_name.clear();
-                        password.clear();
-                        logInStage.close();
-                    } catch (IOException ex) {
-                        System.out.println(ex);
-                    }
+            }
+            else if(!"admin".equalsIgnoreCase(user_name.getText())){
+                User_gui user_gui=new User_gui();
+                try {
+                    user_gui.start();
+                    logInStage.close();
+                } 
+                catch (IOException ex) {
+                    System.out.println(ex);
                 }
             }
+            else{
+                Admin admin;
+                admin = new Admin();
+                admin.adminStage();
+                user_name.clear();
+                password.clear();
+                logInStage.close();
+            }
+            count++;
         });
         
         create_user_btn.setOnAction(event ->{
                 NewUser newUser=new NewUser();
+            try {
                 newUser.startNewUser();
                 logInStage.close();
+            } catch (IOException ex) {
+                System.out.println(ex);
+            }
         });
         
         reset_btn.setOnAction(event ->{
             ResetPassword reset_stage=new ResetPassword();
-            reset_stage.startReset();
-            logInStage.close();
+            try {
+                reset_stage.startReset();
+                logInStage.close();
+            } catch (IOException ex) {
+                System.out.println(ex);
+            }
         });
 
         VBox vbox=new VBox(user_name, password, log_in_btn, create_user_btn, reset_btn, error);

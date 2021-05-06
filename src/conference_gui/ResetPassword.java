@@ -5,7 +5,6 @@
 package conference_gui;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -19,7 +18,7 @@ import javafx.scene.control.TextField;
 public class ResetPassword{
 
 
-    public void startReset() {
+    public void startReset() throws IOException {
         
         Stage newUserStage=new Stage();
         
@@ -58,53 +57,45 @@ public class ResetPassword{
                 new_error.setText("Please enter a password");
             }
             else{  
-                Map map;
-                try {
-                    map=Datas.readDataFile();
-                    if(!map.containsKey(user_name.getText().toLowerCase())){
-                        new_error.setText("User Names does not Exist");
-                        user_name.clear();
-                        new_password.clear();
-                        confirm_password.clear();
-                        secure_question.clear();
-                        return;
-                    }
-                    List<Object> value_list=(List<Object>) map.get(user_name.getText().toLowerCase());
-                    Object question=value_list.get(1);
-                    if(!question.toString().equalsIgnoreCase(secure_question.getText().toLowerCase())){
-                        new_error.setText("Security Answer is not correct");
-                        secure_question.clear();
-                        confirm_password.clear();
-                        new_password.clear();
-                    }
-                    else if(!new_password.getText().equals(confirm_password.getText())){
-                        new_error.setText("Passwords do not match");
-                        confirm_password.clear();
-                        new_password.clear();
-                    }
-                    else{
-                        value_list.set(0, new_password.getText());
-                        map.replace(user_name.getText(), value_list);
-                        Datas.replaceData(map);
+                Map<String, Map<String,String>> map=Datas.getUserMap();
+                if(!map.containsKey(user_name.getText().toLowerCase())){
+                    new_error.setText("User Names does not Exist");
+                    user_name.clear();
+                    new_password.clear();
+                    confirm_password.clear();
+                    secure_question.clear();
+                }
+                else if(!map.get(user_name.getText()).get("question").equalsIgnoreCase(secure_question.getText())){
+                    new_error.setText("Security Answer is not correct");
+                    secure_question.clear();
+                    confirm_password.clear();
+                    new_password.clear();
+                }
+                else if(!new_password.getText().equals(confirm_password.getText())){
+                    new_error.setText("Passwords do not match");
+                    confirm_password.clear();
+                    new_password.clear();
+                }
+                else{
+                    try {
+                        Datas.replaceUserPassword(user_name.getText(), confirm_password.getText());
                         new_error.setText("New Password is Saved");
                         new_error.setStyle("-fx-background-color: rgb(0,255,0);");
                         user_name.clear();
                         new_password.clear();
                         confirm_password.clear();
                         secure_question.clear();
+                    } catch (IOException ex) {
+                        System.out.println(ex);
                     }
-                } 
-                catch (IOException ex) {
-                    System.out.println(ex);
-                }     
+                }
             }        
         });
         
         back_btn.setOnAction(event ->{
-            
             Conference_gui c_gui;
+            c_gui = new Conference_gui();
             try {
-                c_gui = new Conference_gui();
                 c_gui.start(newUserStage);
             } catch (IOException ex) {
                 System.out.println(ex);
