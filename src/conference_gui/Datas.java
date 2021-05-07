@@ -6,23 +6,28 @@ package conference_gui;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.EOFException;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiFunction;
 
 
 public class Datas {
 
     private static String str="";
+    private static String loged_in_user="";
     private static int log_in_count=0;
     private static Map <String, Map<String, String>> user_map=new HashMap<>();
     private static Map <String, String> admin_map=new HashMap();
     
+    public static void setLogedInUser(String user){
+        loged_in_user=user;
+    }
+    
+    public static String getLogedInUser(){
+        return loged_in_user;
+    }
 
     public static void addUserToMap(String map_key, Map<String,String> map_values){
         user_map.put(map_key, map_values);
@@ -36,6 +41,22 @@ public class Datas {
     public static void replaceUserPassword(String user, String password) throws IOException{
         user_map.get(user).replace("password", password);
         writeDataFile();
+    }
+    
+    public static void replaceUserSelections(int general_value, int student_value,
+                                            int dinner_value, int commerce_value,
+                                            int web_value, int java_value,
+                                            int network_value, int total,
+                                            String user){
+        user_map.get(user).replace("general_info", String.format("%,d",general_value));
+        user_map.get(user).replace("student_info", String.format("%,d",student_value));
+        user_map.get(user).replace("dinner_info", String.format("%,d",dinner_value));
+        user_map.get(user).replace("commerce_info", String.format("%,d",commerce_value));
+        user_map.get(user).replace("web_info", String.format("%,d",web_value));
+        user_map.get(user).replace("java_info", String.format("%,d",java_value));
+        user_map.get(user).replace("network_info", String.format("%,d",network_value));
+        user_map.get(user).replace("total_price", String.format("%,d",total));
+        System.out.println(user_map);
     }
     
     public static Map<String, Map<String,String>> getUserMap(){
@@ -52,10 +73,10 @@ public class Datas {
             user_map.forEach((key, value)->{
                 str="";
                 value.forEach((keys, values) ->{
-                    str=str+keys+"/"+values+",";
+                    str=str+keys+"/"+values+":";
                 });
                 try {
-                    output_file.writeUTF(key+":"+str);
+                    output_file.writeUTF(key+"="+str);
                 } catch (IOException ex) {
                     System.out.println(ex);
                 }
@@ -71,8 +92,8 @@ public class Datas {
         DataInputStream input_file = new DataInputStream(fstream);
         while (input_file.available()>0) {
             string=input_file.readUTF();
-            String[] token=string.split(":");
-            String[] str_token=token[1].split(",");
+            String[] token=string.split("=");
+            String[] str_token=token[1].split(":");
             Map <String, String> temp_map=new HashMap<>();
             for (String str_token1 : str_token) {
                 String[] temp2_token = str_token1.split("/");

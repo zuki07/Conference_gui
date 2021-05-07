@@ -80,6 +80,7 @@ public class Conference_gui extends Application {
             }
             else if(!"admin".equalsIgnoreCase(user_name.getText())){
                 User_gui user_gui=new User_gui();
+                Datas.setLogedInUser(user_name.getText());
                 try {
                     user_gui.start();
                     logInStage.close();
