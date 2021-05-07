@@ -3,6 +3,8 @@ package conference_gui;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
@@ -25,7 +27,7 @@ public class User_gui{
     public void start() throws IOException {
         
         Stage userStage=new Stage();
-        Map user_price=Datas.getAdminMap();
+        Map<String,String> user_price=Datas.getAdminMap();
         
 //                                SETUP LABELS & BUTTON
         Label general_label=new Label("General Registration: $"+user_price.get("general"));
@@ -141,14 +143,21 @@ public class User_gui{
                 general.setStyle("");
                 student.setStyle("");
                 
-                general_value=general_value*Integer.parseInt(user_price.get("general").toString());
-                student_value=student_value*Integer.parseInt(user_price.get("student").toString());
-                dinner_value=dinner_value*Integer.parseInt(user_price.get("dinner").toString());
-                commerce_value=commerce_value*Integer.parseInt(user_price.get("commerce").toString());
-                web_value=web_value*Integer.parseInt(user_price.get("web").toString());
-                java_value=java_value*Integer.parseInt(user_price.get("java").toString());
-                network_value=network_value*Integer.parseInt(user_price.get("network").toString());
-                int total_amount=general_value+student_value+dinner_value+commerce_value+web_value+java_value+network_value;        //add everthing togethe
+                general_value=general_value*Integer.parseInt(user_price.get("general"));
+                student_value=student_value*Integer.parseInt(user_price.get("student"));
+                dinner_value=dinner_value*Integer.parseInt(user_price.get("dinner"));
+                commerce_value=commerce_value*Integer.parseInt(user_price.get("commerce"));
+                web_value=web_value*Integer.parseInt(user_price.get("web"));
+                java_value=java_value*Integer.parseInt(user_price.get("java"));
+                network_value=network_value*Integer.parseInt(user_price.get("network"));
+                int total_amount=general_value+student_value+dinner_value+commerce_value+web_value+java_value+network_value;        //add everthing together
+                Datas.replaceUserSelections(general_value, student_value, dinner_value, commerce_value, web_value, 
+                                            java_value, network_value, total_amount, Datas.getLogedInUser());
+                try {
+                    Datas.writeDataFile();
+                } catch (IOException ex) {
+                    System.out.println(ex);
+                }
                 total_label.setText(String.format("Grand Total: $%,d",total_amount));
                 total_label.setStyle("-fx-border-width: 1.5px; -fx-border-radius: 10px;"+                                           //*does not look good without inline styling
                                     " -fx-border-color: rgb(255,255,255); -fx-background-radius: 10px;"
@@ -168,8 +177,8 @@ public class User_gui{
         
 //                                    LOG OUT BUTTON LAMBDA
         logout_btn.setOnAction(event ->{
-           userStage.close();
-           Conference_gui c_gui;
+            userStage.close();
+            Conference_gui c_gui;
             c_gui = new Conference_gui();
             try {
                 c_gui.start(userStage);
@@ -194,8 +203,7 @@ public class User_gui{
         grid_pane.add(dinner, 1, 2);
         
         grid_pane.add(workshop_label, 0, 6);                                        //workshop label and combo box
-        grid_pane.setColumnSpan(workshop_label, 2);
-        GridPane.setHalignment(workshop_label, HPos.CENTER);
+        GridPane.setHalignment(workshop_label, HPos.RIGHT);
         
         grid_pane.add(commerce_label, 0, 7);                                        //e-commerce label and combo box
         GridPane.setHalignment(commerce_label, HPos.RIGHT);
@@ -220,11 +228,11 @@ public class User_gui{
         
         grid_pane.add(clear_btn, 2,11);                                             //clear all button
         
-        grid_pane.add(total_label, 0, 11);                                          //total label
-        GridPane.setHalignment(total_label, HPos.RIGHT);
+        grid_pane.add(total_label, 1, 12, 2, 1);                                          //total label
+        GridPane.setHalignment(total_label, HPos.LEFT);
         
-        grid_pane.add(error_label,0,11);                                            //error label
-        GridPane.setHalignment(error_label, HPos.RIGHT);
+        grid_pane.add(error_label, 1, 12, 2, 1);                                            //error label
+        GridPane.setHalignment(error_label, HPos.LEFT);
         
         grid_pane.setAlignment(Pos.BOTTOM_CENTER);
         grid_pane.setHgap(10);
