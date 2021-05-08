@@ -75,6 +75,7 @@ public class Admin {
 
         Button exit_btn=new Button("Exit");
         Button save_btn=new Button("Save Changes");
+        Button view_users=new Button("View Users");
         
         Label error_label=new Label();
         error_label.setVisible(false);
@@ -130,6 +131,11 @@ public class Admin {
                 System.out.println(ex);
             }
         });
+        view_users.setOnAction(event->{
+            AdminDataView view_data=new AdminDataView();
+            view_data.startViewStage();
+            
+        });
         
         GridPane grid=new GridPane();
         FxElements grid_add=new FxElements();
@@ -142,7 +148,7 @@ public class Admin {
         grid_add.setGridAdd(grid, java_current, java_input, java_btn, 5);
         grid_add.setGridAdd(grid, network_current, network_input, network_btn, 6);
         
-        HBox hbox=new HBox(exit_btn, save_btn);
+        HBox hbox=new HBox(exit_btn, save_btn, view_users);
         hbox.setAlignment(Pos.CENTER);
         hbox.setSpacing(20);
         grid.add(hbox, 0, 7, 3, 1);
