@@ -31,6 +31,7 @@ public class Datas {
 
     public static void addUserToMap(String map_key, Map<String,String> map_values){
         user_map.put(map_key, map_values);
+        System.out.println(user_map);
         try {
             writeDataFile();
         } catch (IOException ex) {
