@@ -64,6 +64,11 @@ public class Datas {
         return user_map;
     }
     
+    public static Map<String, Map<String,String>> getCloneUserMap(){
+        Map<String, Map<String,String>> clone_map=user_map;
+        return clone_map;
+    }
+    
     public static Map getAdminMap(){
         return admin_map;
     }
