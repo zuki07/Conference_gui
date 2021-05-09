@@ -27,7 +27,7 @@ public class AdminDataView  {
         TableView table=new TableView();
         
         System.out.println(Datas.getUserMap().entrySet().toString());
-        Datas.getUserMap().forEach((key,value)->{
+        Datas.getCloneUserMap().forEach((key,value)->{
             value.put("user",key);
             ObservableList<Map<String, String>> data = FXCollections.<Map<String, String>>observableArrayList();
             data.add(value);
