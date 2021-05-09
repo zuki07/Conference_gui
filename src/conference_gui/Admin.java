@@ -134,7 +134,7 @@ public class Admin {
         view_users.setOnAction(event->{
             AdminDataView view_data=new AdminDataView();
             view_data.startViewStage();
-            
+            admin_stage.close();
         });
         
         GridPane grid=new GridPane();
