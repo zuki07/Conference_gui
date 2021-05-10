@@ -30,6 +30,9 @@ public class AdminDataView  {
         System.out.println(Datas.getUserMap().entrySet().toString());
         Map<String,Map<String,String>> map_data=Datas.getUserMap();
         map_data.forEach((key,value)->{
+            if(key.equals("admin")){
+                return;
+            }
             value.put("user",key);
             ObservableList<Map<String, String>> data = FXCollections.<Map<String, String>>observableArrayList();
             data.add(value);
