@@ -2,6 +2,7 @@
 package conference_gui;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -143,16 +144,25 @@ public class User_gui{
                 general.setStyle("");
                 student.setStyle("");
                 
-                general_value=general_value*Integer.parseInt(user_price.get("general"));
-                student_value=student_value*Integer.parseInt(user_price.get("student"));
-                dinner_value=dinner_value*Integer.parseInt(user_price.get("dinner"));
-                commerce_value=commerce_value*Integer.parseInt(user_price.get("commerce"));
-                web_value=web_value*Integer.parseInt(user_price.get("web"));
-                java_value=java_value*Integer.parseInt(user_price.get("java"));
-                network_value=network_value*Integer.parseInt(user_price.get("network"));
-                int total_amount=general_value+student_value+dinner_value+commerce_value+web_value+java_value+network_value;        //add everthing together
-                Datas.replaceUserSelections(general_value, student_value, dinner_value, commerce_value, web_value, 
-                                            java_value, network_value, total_amount, Datas.getLogedInUser());
+                int general_price=general_value*Integer.parseInt(user_price.get("general"));
+                int student_price=student_value*Integer.parseInt(user_price.get("student"));
+                int dinner_price=dinner_value*Integer.parseInt(user_price.get("dinner"));
+                int commerce_price=commerce_value*Integer.parseInt(user_price.get("commerce"));
+                int web_price=web_value*Integer.parseInt(user_price.get("web"));
+                int java_price=java_value*Integer.parseInt(user_price.get("java"));
+                int network_price=network_value*Integer.parseInt(user_price.get("network"));
+                int total_amount=general_price+student_price+dinner_price+commerce_price+web_price+java_price+network_price;        //add everthing together
+                
+                String[] values_array={String.valueOf(general_value)+"="+"$"+String.valueOf(general_price),
+                                        String.valueOf(student_value)+"="+"$"+String.valueOf(student_price),
+                                        String.valueOf(dinner_value)+"="+"$"+String.valueOf(dinner_price),
+                                        String.valueOf(commerce_value)+"="+"$"+String.valueOf(commerce_price),
+                                        String.valueOf(web_value)+"="+"$"+String.valueOf(web_price),
+                                        String.valueOf(java_value)+"="+"$"+String.valueOf(java_price),
+                                        String.valueOf(network_value)+"="+"$"+String.valueOf(network_price),
+                                        String.valueOf("$"+total_amount),
+                                        Datas.getLogedInUser()};
+                Datas.replaceUserSelections(values_array);
                 try {
                     Datas.writeDataFile();
                 } catch (IOException ex) {
@@ -163,7 +173,7 @@ public class User_gui{
                                     " -fx-border-color: rgb(255,255,255); -fx-background-radius: 10px;"
                                     + "-fx-padding: 7px;");                                                                         //*over ride css
                 error_label.setText("");
-                error_label.setStyle("-fx-border-style: none; -fx-border-color: none; -fx-padding: 0px;");                          //*same as above
+                error_label.setStyle("");                          //*same as above
                 }
         });
         
