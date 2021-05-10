@@ -44,29 +44,19 @@ public class Datas {
         writeDataFile();
     }
     
-    public static void replaceUserSelections(int general_value, int student_value,
-                                            int dinner_value, int commerce_value,
-                                            int web_value, int java_value,
-                                            int network_value, int total,
-                                            String user){
-        user_map.get(user).replace("general_info", String.format("%,d",general_value));
-        user_map.get(user).replace("student_info", String.format("%,d",student_value));
-        user_map.get(user).replace("dinner_info", String.format("%,d",dinner_value));
-        user_map.get(user).replace("commerce_info", String.format("%,d",commerce_value));
-        user_map.get(user).replace("web_info", String.format("%,d",web_value));
-        user_map.get(user).replace("java_info", String.format("%,d",java_value));
-        user_map.get(user).replace("network_info", String.format("%,d",network_value));
-        user_map.get(user).replace("total_price", String.format("%,d",total));
-        System.out.println(user_map);
+    public static void replaceUserSelections(String[] array){
+        user_map.get(array[8]).replace("general_info", array[0]);
+        user_map.get(array[8]).replace("student_info", array[1]);
+        user_map.get(array[8]).replace("dinner_info", array[2]);
+        user_map.get(array[8]).replace("commerce_info", array[3]);
+        user_map.get(array[8]).replace("web_info", array[4]);
+        user_map.get(array[8]).replace("java_info", array[5]);
+        user_map.get(array[8]).replace("network_info", array[6]);
+        user_map.get(array[8]).replace("total_price", array[7]);
     }
     
     public static Map<String, Map<String,String>> getUserMap(){
         return user_map;
-    }
-    
-    public static Map<String, Map<String,String>> getCloneUserMap(){
-        Map<String, Map<String,String>> clone_map=user_map;
-        return clone_map;
     }
     
     public static Map getAdminMap(){
@@ -82,7 +72,7 @@ public class Datas {
                     str=str+keys+"/"+values+":";
                 });
                 try {
-                    output_file.writeUTF(key+"="+str);
+                    output_file.writeUTF(key+"=="+str);
                 } catch (IOException ex) {
                     System.out.println(ex);
                 }
@@ -98,7 +88,7 @@ public class Datas {
         DataInputStream input_file = new DataInputStream(fstream);
         while (input_file.available()>0) {
             string=input_file.readUTF();
-            String[] token=string.split("=");
+            String[] token=string.split("==");
             String[] str_token=token[1].split(":");
             Map <String, String> temp_map=new HashMap<>();
             for (String str_token1 : str_token) {
