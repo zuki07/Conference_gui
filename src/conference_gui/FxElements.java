@@ -7,6 +7,7 @@ package conference_gui;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -33,11 +34,17 @@ public class FxElements {
         return password_field;
     }
     
-    public void setGridAdd(GridPane grid, Label current_label, 
+    public void setAdminGrid(GridPane grid, Label current_label, 
                             TextField input, Button btn, int row){
         grid.add(current_label, 0, row);
         GridPane.setHalignment(current_label, HPos.RIGHT);
         grid.add(input, 1, row);
         grid.add(btn, 2, row);
+    }
+    
+    public void setUserGrid(GridPane grid, Label label, ComboBox input, int row){
+        grid.add(label, 0, row);
+        GridPane.setHalignment(label, HPos.RIGHT);
+        grid.add(input, 1, row);
     }
 }
