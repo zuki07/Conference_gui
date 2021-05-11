@@ -140,13 +140,13 @@ public class Admin {
         GridPane grid=new GridPane();
         FxElements grid_add=new FxElements();
         
-        grid_add.setGridAdd(grid, general_current, general_input, general_btn, 0);
-        grid_add.setGridAdd(grid, student_current, student_input, student_btn, 1);
-        grid_add.setGridAdd(grid, dinner_current, dinner_input, dinner_btn, 2);
-        grid_add.setGridAdd(grid, commerce_current, commerce_input, commerce_btn, 3);
-        grid_add.setGridAdd(grid, web_current, web_input, web_btn, 4);
-        grid_add.setGridAdd(grid, java_current, java_input, java_btn, 5);
-        grid_add.setGridAdd(grid, network_current, network_input, network_btn, 6);
+        grid_add.setAdminGrid(grid, general_current, general_input, general_btn, 0);
+        grid_add.setAdminGrid(grid, student_current, student_input, student_btn, 1);
+        grid_add.setAdminGrid(grid, dinner_current, dinner_input, dinner_btn, 2);
+        grid_add.setAdminGrid(grid, commerce_current, commerce_input, commerce_btn, 3);
+        grid_add.setAdminGrid(grid, web_current, web_input, web_btn, 4);
+        grid_add.setAdminGrid(grid, java_current, java_input, java_btn, 5);
+        grid_add.setAdminGrid(grid, network_current, network_input, network_btn, 6);
         
         HBox hbox=new HBox(exit_btn, save_btn, view_users);
         hbox.setAlignment(Pos.CENTER);

@@ -2,10 +2,7 @@
 package conference_gui;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
@@ -200,48 +197,41 @@ public class User_gui{
         
 //                                  GRID LAYOUT
         GridPane grid_pane=new GridPane();
-        grid_pane.add(general_label, 0, 0);                                         //general label and combo box
-        GridPane.setHalignment(general_label, HPos.RIGHT);
-        grid_pane.add(general, 1, 0);
+        FxElements general_element=new FxElements();
+        general_element.setUserGrid(grid_pane, general_label, general, 0);
         
-        grid_pane.add(student_label, 0, 1);                                          //student label and combo box
-        GridPane.setHalignment(student_label, HPos.RIGHT);
-        grid_pane.add(student, 1, 1);
+        FxElements student_element=new FxElements();
+        student_element.setUserGrid(grid_pane, student_label, student, 1);
         
-        grid_pane.add(dinner_label, 0, 2);                                           //dinner label and combo box
-        GridPane.setHalignment(dinner_label, HPos.RIGHT);
-        grid_pane.add(dinner, 1, 2);
+        FxElements dinner_element=new FxElements();
+        dinner_element.setUserGrid(grid_pane, dinner_label, dinner, 2);
         
-        grid_pane.add(workshop_label, 0, 6);                                        //workshop label and combo box
-        GridPane.setHalignment(workshop_label, HPos.RIGHT);
+        grid_pane.add(workshop_label, 0, 3, 2, 1);                                        
+        GridPane.setHalignment(workshop_label, HPos.CENTER);
         
-        grid_pane.add(commerce_label, 0, 7);                                        //e-commerce label and combo box
-        GridPane.setHalignment(commerce_label, HPos.RIGHT);
-        grid_pane.add(commerce, 1, 7);
+        FxElements commerce_element=new FxElements();
+        commerce_element.setUserGrid(grid_pane, commerce_label, commerce, 4);
         
-        grid_pane.add(web_label, 0, 8);                                             //web label and combo box
-        GridPane.setHalignment(web_label, HPos.RIGHT);
-        grid_pane.add(web, 1, 8);
+        FxElements web_element=new FxElements();
+        web_element.setUserGrid(grid_pane, web_label, web, 5);
         
-        grid_pane.add(java_label, 0, 9);                                            //jave label and combo box
-        GridPane.setHalignment(java_label, HPos.RIGHT);
-        grid_pane.add(java, 1, 9);
+        FxElements java_element=new FxElements();
+        java_element.setUserGrid(grid_pane, java_label, java, 6);
         
-        grid_pane.add(network_label, 0, 10);                                        //network label and combo box
-        GridPane.setHalignment(network_label, HPos.RIGHT);
-        grid_pane.add(network, 1, 10);
+        FxElements network_element=new FxElements();
+        network_element.setUserGrid(grid_pane, network_label, network, 7);
         
-        grid_pane.add(logout_btn, 0, 11);
+        grid_pane.add(logout_btn, 0, 8);
         GridPane.setHalignment(logout_btn, HPos.RIGHT);
         
-        grid_pane.add(total_btn, 1, 11);                                            //total button
+        grid_pane.add(total_btn, 1, 8);                                            //total button
         
-        grid_pane.add(clear_btn, 2,11);                                             //clear all button
+        grid_pane.add(clear_btn, 2,8);                                             //clear all button
         
-        grid_pane.add(total_label, 1, 12, 2, 1);                                          //total label
+        grid_pane.add(total_label, 1, 9, 2, 1);                                          //total label
         GridPane.setHalignment(total_label, HPos.LEFT);
         
-        grid_pane.add(error_label, 1, 12, 2, 1);                                            //error label
+        grid_pane.add(error_label, 1, 9, 2, 1);                                            //error label
         GridPane.setHalignment(error_label, HPos.LEFT);
         
         grid_pane.setAlignment(Pos.BOTTOM_CENTER);

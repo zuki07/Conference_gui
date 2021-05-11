@@ -28,7 +28,8 @@ public class AdminDataView  {
         TableView table=new TableView();
         
         System.out.println(Datas.getUserMap().entrySet().toString());
-        Map<String,Map<String,String>> map_data=Datas.getUserMap();
+        Map<String,Map<String,String>> map_data=new HashMap<>();
+        map_data.putAll(Datas.getUserMap());
         map_data.forEach((key,value)->{
             if(key.equals("admin")){
                 return;
