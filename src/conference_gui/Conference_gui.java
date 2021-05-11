@@ -66,7 +66,7 @@ public class Conference_gui extends Application {
                 user_name.clear();
                 password.clear();
             }
-            else if(!password.getText().equals(Datas.getUserMap().get(user_name.getText()).get("password"))){
+            else if(!password.getText().equals(Datas.getUserMap().get(user_name.getText().toLowerCase()).get("password"))){
                     error.setText("The password is invalid");
                     password.clear();
             }
