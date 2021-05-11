@@ -19,13 +19,10 @@ import javafx.scene.control.TextField;
 
 
 public class Conference_gui extends Application {
-
     
     public static void main(String[] args) throws FileNotFoundException {
         launch(args);
     }
-
-    
 
     @Override
     public void start(Stage logInStage) throws IOException{
@@ -46,10 +43,8 @@ public class Conference_gui extends Application {
         error.setId("log_in_error");
         
         log_in_btn.setOnAction(event ->{
-            error.setVisible(false);
             error.setText("");
             int count=Datas.getCount();
-            System.out.println("count: "+count);
             if(count==0){
                 try {
                 Datas.readDataFile();
@@ -59,22 +54,19 @@ public class Conference_gui extends Application {
                     System.out.println(ex);
                 }
             }
+            error.setVisible(true);
             if(user_name.getText().equals("")){
-                error.setVisible(true);
                 error.setText("Please enter a user name.");
             }
             else if(password.getText().equals("")){
-                error.setVisible(true);
                 error.setText("Please enter a password.");
             }
             else if(!Datas.getUserMap().containsKey(user_name.getText().toLowerCase())){
-                error.setVisible(true);
                 error.setText(user_name.getText()+" user does not exist");
                 user_name.clear();
                 password.clear();
             }
             else if(!password.getText().equals(Datas.getUserMap().get(user_name.getText()).get("password"))){
-                    error.setVisible(true);
                     error.setText("The password is invalid");
                     password.clear();
             }
